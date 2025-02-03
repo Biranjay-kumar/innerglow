@@ -101,7 +101,7 @@ const DashboardPage = () => {
           </p>
         </div>
 
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <h2 className="text-xl font-semibold mb-4">Change Batch</h2>
           <select
             value={newBatch}
@@ -113,7 +113,7 @@ const DashboardPage = () => {
             <option value="8-9AM">8-9 AM</option>
             <option value="5-6PM">5-6 PM</option>
           </select>
-        </div>
+        </div> */}
 
         <div className="mt-4">
           <h2 className="text-xl font-semibold mb-2">Payment Section</h2>

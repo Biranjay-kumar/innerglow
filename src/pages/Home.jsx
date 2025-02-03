@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import yoga2 from "../../public/images/yoga2.jpg";
 import FAQSection from "../components/Faqs";
 
 const HomePage = () => {
@@ -11,7 +10,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <section className="text-center py-20 px-6">
         <img
-          src="../../public/images/yoga2.jpg"
+          src="../../public/yoga2.jpg"
           alt="Yoga class"
           className="w-full max-w-3xl mx-auto rounded-lg shadow-md"
         />
@@ -96,7 +95,7 @@ const HomePage = () => {
       <section className="py-16 px-6 text-center">
         <h2 className="text-3xl font-semibold text-gray-800">About Us</h2>
         <img
-          src="../../public/images/yoga3.jpg"
+          src="../../public/yoga3.jpg"
           alt="Yoga practice"
           className="w-full max-w-2xl mx-auto rounded-lg shadow-md mt-6"
         />
