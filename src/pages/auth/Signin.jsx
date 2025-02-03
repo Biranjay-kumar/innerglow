@@ -36,16 +36,16 @@ const SignInPage = () => {
     try {
       const response = await axios.post(`${backendUrl}/user/login`, userData);
 
-      if (response.data.success) {
+      if (response.data.data.success) {
         notifySuccess("Sign in successful!");
-
+        console.log(response)
         // Set user data and token in Zustand store
         const { data } = response;
         setUser({
           name: data.data.name,
-          email: data.data.email,
-          dob: data.data.dob,
-          _id: data.data._id,
+          email: data.data.data.email,
+          dob: data.data.data.dob,
+          _id: data.data.data._id,
         });
         setAuthToken(data.token); // Set token for authentication
 

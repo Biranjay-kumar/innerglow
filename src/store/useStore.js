@@ -1,28 +1,36 @@
 import { create } from "zustand";
 
-
-// Load user and authToken from localStorage if they exist
-const storedUser = JSON.parse(localStorage.getItem('user')) || null;
-const storedAuthToken = localStorage.getItem('authToken') || null;
+// Load user and authToken from localStorage safely
+const loadFromLocalStorage = (key, defaultValue = null) => {
+  try {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : defaultValue;
+  } catch (error) {
+    console.error(`Error loading ${key} from localStorage:`, error);
+    return defaultValue;
+  }
+};
 
 const useStore = create((set) => ({
-  user: storedUser, // Initialize from localStorage
-  authToken: storedAuthToken, // Initialize from localStorage
+  user: loadFromLocalStorage("user"),
+  authToken: localStorage.getItem("authToken") || null,
+  paymentStatus: null, // Ensure paymentStatus exists in state
+
   setUser: (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData)); // Persist user data in localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
     set({ user: userData });
   },
   setAuthToken: (token) => {
-    localStorage.setItem('authToken', token); // Persist authToken in localStorage
+    localStorage.setItem("authToken", token);
     set({ authToken: token });
   },
-	setPaymentStatus: (status) => {
-    set({ paymentStatus: status }); // Set the payment status in the store
+  setPaymentStatus: (status) => {
+    set({ paymentStatus: status });
   },
   logout: () => {
-    localStorage.removeItem('user'); // Remove user data from localStorage
-    localStorage.removeItem('authToken'); // Remove authToken from localStorage
-    set({ user: null, authToken: null }); // Reset state
+    localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
+    set({ user: null, authToken: null, paymentStatus: null }); // Reset all state values
   },
 }));
 

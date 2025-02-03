@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore"; // Zustand store
 import axios from "axios"; // For making HTTP requests
+import profileLogo from "../../public/images/profile.png";
 
 const backendUrl =
   import.meta.env.VITE_SERVER || "http://localhost:5000/v1/api";
 
 const ProfilePage = () => {
-  const { user, setUser } = useStore((state) => state); // Zustand store for user data
+  const { user, setUser } = useStore((state) => state);
   const navigate = useNavigate();
   const [batches, setBatches] = useState([]);
   const [newBatch, setNewBatch] = useState(user?.batch || "");
@@ -31,29 +32,51 @@ const ProfilePage = () => {
         console.error("Error fetching batches:", error);
       });
 
-    // Check if the user already has a batch
     if (!user.batch) {
       setNewBatch(""); // Allow the user to create/select a batch
     }
   }, [user, navigate]);
 
-  // Handle batch change selection (without API call)
+  // Handle batch selection
   const handleBatchChange = (selectedBatch) => {
     setNewBatch(selectedBatch.name);
-    setSelectedBatchId(selectedBatch._id); // Store the selected batch ID
+    setSelectedBatchId(selectedBatch._id);
   };
 
-  // Show confirmation dialog for changing batch
+  // Show confirmation dialog
   const handleChangeSlot = () => {
+    if (!selectedBatchId) {
+      alert("Please select a batch first.");
+      return;
+    }
     setShowConfirmDialog(true);
   };
 
   // Confirm and update batch
   const confirmChangeSlot = () => {
+    const authToken = localStorage.getItem("authToken");
+
     axios
-      .patch(`${backendUrl}/users/${user._id}`, { batchId: selectedBatchId })
+      .put(
+        `${backendUrl}/batch/${selectedBatchId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
       .then(() => {
-        setUser({ ...user, batch: newBatch, batchId: selectedBatchId });
+        // Update user details and persist in localStorage
+        const updatedUser = {
+          ...user,
+          batch: newBatch,
+          batchId: selectedBatchId,
+        };
+
+        setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser)); // Store in localStorage
+
         setShowConfirmDialog(false);
         alert("Batch updated successfully!");
       })
@@ -64,17 +87,10 @@ const ProfilePage = () => {
       });
   };
 
-  // Cancel batch change
   const cancelChangeSlot = () => {
     setShowConfirmDialog(false);
   };
 
-  // Handle logout
-  const handleLogout = () => {
-    navigate("/");
-  };
-
-  // Show loading if user is not set
   if (!user) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500">
@@ -91,7 +107,7 @@ const ProfilePage = () => {
         {/* Profile Header */}
         <div className="flex items-center mb-6">
           <img
-            src={user.profilePicture || "https://via.placeholder.com/100"}
+            src={user.profilePicture || profileLogo}
             alt="Profile"
             className="w-24 h-24 rounded-full border-4 border-purple-500 mr-4 shadow-md"
           />
@@ -127,23 +143,10 @@ const ProfilePage = () => {
               }
               className="border border-gray-600 p-3 rounded-md w-full bg-gray-900 text-white"
             >
+              <option value="">Select a batch</option>
               {batches.map((batch) => (
-                <option
-                  key={batch._id}
-                  value={batch.name}
-                  className="flex justify-between px-3 py-2"
-                >
-                  <span>{batch.name}</span>
-                  <span
-                    className={`ml-auto ${
-                      batch.availableSlots < 5
-                        ? "text-red-500"
-                        : "text-green-400"
-                    }`}
-                  >
-                    Slots: {batch.availableSlots}{" "}
-                    {batch.availableSlots < 5 && "⚠️"}
-                  </span>
+                <option key={batch._id} value={batch.name}>
+                  {batch.name} - {batch.availableSlots} slots
                 </option>
               ))}
             </select>
@@ -181,16 +184,16 @@ const ProfilePage = () => {
           </div>
         )}
 
-        {/* Logout Button */}
+        {/* Navigation Buttons */}
         <div className="mt-6 flex space-x-4">
           <button
-            onClick={() => navigate("/home")} // Navigate to home page
+            onClick={() => navigate("/")}
             className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 shadow-md transition-transform transform hover:scale-105"
           >
             Home
           </button>
           <button
-            onClick={() => navigate("/dashboard")} // Navigate to pay page
+            onClick={() => navigate("/dashboard")}
             className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 shadow-md transition-transform transform hover:scale-105"
           >
             Pay
