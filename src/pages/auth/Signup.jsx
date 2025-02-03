@@ -104,57 +104,94 @@ const SignUpPage = () => {
     <>
       <Navbar />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 to-yellow-100">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-          <h2 className="text-3xl font-semibold text-center text-violet-600 mb-6">
-            Sign In
-          </h2>
-
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
-                required
-              />
-            </div>
-
-            <div className="mb-6">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition duration-300"
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Sign Up for Yoga Classes
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full p-2 mt-1 border rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-2 mt-1 border rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="dob"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              id="dob"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              required
+              className="w-full p-2 mt-1 border rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-2 mt-1 border rounded-md"
+            />
+          </div>
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+          <button
+            type="submit"
+            className="w-full bg-violet-600 text-white p-2 rounded-md"
+          >
+            Sign Up
+          </button>
+          <div className="text-center mt-4">
+            Do you have an account?{" "}
+            <a
+              href="/signin"
+              className="text-violet-600 font-semibold hover:underline"
             >
               Sign In
-            </button>
-
-            <div className="mt-4 text-center">
-              <p className="text-sm">
-                Don't have an account?
-                <a
-                  href="/signup"
-                  className="text-violet-600 font-semibold hover:underline"
-                >
-                  {" "}
-                  Sign Up
-                </a>
-              </p>
-            </div>
-          </form>
-        </div>
+            </a>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
