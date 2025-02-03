@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import useStore from "../../store/useStore";
 import { useState } from "react";
+import Navbar from "../../components/Navbar";
 
 const backendUrl = import.meta.env.VITE_SERVER;
 
@@ -38,7 +39,7 @@ const SignInPage = () => {
 
       if (response.data.data.success) {
         notifySuccess("Sign in successful!");
-        console.log(response)
+        console.log(response);
         // Set user data and token in Zustand store
         const { data } = response;
         setUser({
@@ -64,57 +65,60 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 to-yellow-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-        <h2 className="text-3xl font-semibold text-center text-violet-600 mb-6">
-          Sign In
-        </h2>
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition duration-300"
-          >
+    <>
+      <Navbar />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 to-yellow-100">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+          <h2 className="text-3xl font-semibold text-center text-violet-600 mb-6">
             Sign In
-          </button>
+          </h2>
 
-          <div className="mt-4 text-center">
-            <p className="text-sm">
-              Don't have an account?
-              <a
-                href="/signup"
-                className="text-violet-600 font-semibold hover:underline"
-              >
-                {" "}
-                Sign Up
-              </a>
-            </p>
-          </div>
-        </form>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition duration-300"
+            >
+              Sign In
+            </button>
+
+            <div className="mt-4 text-center">
+              <p className="text-sm">
+                Don't have an account?
+                <a
+                  href="/signup"
+                  className="text-violet-600 font-semibold hover:underline"
+                >
+                  {" "}
+                  Sign Up
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

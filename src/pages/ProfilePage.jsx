@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore"; // Zustand store
 import axios from "axios"; // For making HTTP requests
 import profileLogo from "../../public/images/profile.png";
+import Navbar from "../components/Navbar";
 
 const backendUrl =
   import.meta.env.VITE_SERVER || "http://localhost:5000/v1/api";
@@ -102,8 +103,10 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-700 flex justify-center items-center p-6">
-      <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl max-w-xl w-full text-white backdrop-blur-md bg-opacity-90">
+    <>
+      <Navbar/>
+      <div className="min-h-screen from-yellow-100 to-violet-100 flex justify-center items-center p-6">
+      <div className="bg-slate-600 p-8 rounded-2xl shadow-2xl max-w-xl w-full text-white backdrop-blur-md bg-opacity-90">
         {/* Profile Header */}
         <div className="flex items-center mb-6">
           <img
@@ -201,6 +204,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

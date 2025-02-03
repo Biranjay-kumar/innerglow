@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useStore from "../store/useStore"; // Zustand store
+import Navbar from "../components/Navbar";
 
 const backendUrl = import.meta.env.VITE_SERVER;
 
@@ -30,7 +31,7 @@ const DashboardPage = () => {
   };
 
   const applyCoupon = () => {
-    if (couponCode === "DISCOUNT50") {
+    if (couponCode === "FLEXMONEY") {
       setDiscountedPrice(250);
       alert("Coupon applied! You get a 50% discount.");
     } else {
@@ -83,7 +84,9 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-400 to-violet-500 p-6">
+    <>
+    <Navbar/>
+    <div className="min-h-screen bg-gradient-to-r from-yellow-100 to-violet-100 p-6">
       <div className="bg-white p-8 rounded-2xl shadow-lg max-w-xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">
           Welcome, {user.name}
@@ -116,7 +119,7 @@ const DashboardPage = () => {
           <h2 className="text-xl font-semibold mb-2">Payment Section</h2>
           <input
             type="text"
-            placeholder="Enter Coupon Code"
+            placeholder="FLEXMONEY"
             value={couponCode}
             onChange={(e) => setCouponCode(e.target.value)}
             className="border p-3 rounded-md w-full mb-3"
@@ -157,6 +160,7 @@ const DashboardPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
