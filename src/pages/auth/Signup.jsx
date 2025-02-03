@@ -83,7 +83,7 @@ const SignUpPage = () => {
       console.log("Backend URL:", backendUrl);
       console.log("User Data:", userData);
 
-      const response = await axios.post(`${backendUrl}/user/`, userData);
+      const response = await axios.post(`${backendUrl}/user`, userData);
       console.log("API Response:", response);
 
       if (response.data.success) {
